@@ -3,7 +3,10 @@ package com.unopar.cadastroAlunos.rh.controle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.unopar.cadastroAlunos.rh.dominio.Pessoa;
 import com.unopar.cadastroAlunos.rh.dominio.PessoaRepositorio;
 
 @Controller
@@ -20,5 +23,16 @@ public class PessoaControle {
 		model.addAttribute("listaPessoas", pessoaRepo.findAll());
 		return "rh/pessoas/index";
 	}
+	
+	@GetMapping("/rh/pessoas/nova")
+	public String novaPessoa(@ModelAttribute("pessoa") Pessoa pessoa) {
+		return "rh/pessoas/form";
+	}
+	
+	@PostMapping("/rh/pessoas/salvar")
+	public String salvarPessoa(@ModelAttribute("pessoa") Pessoa pessoa) {
+		pessoaRepo.save(pessoa);
+		return "redirect:/rh/pessoas";
+		}
 	
 }
